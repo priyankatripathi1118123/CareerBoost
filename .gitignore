@@ -1,0 +1,11 @@
+node_modules/
+__pycache__/
+*.pyc
+venv/
+.env
+backend/instance/*.db
+backend/uploads/*
+test_proxy.py
+test_signup.py
+test_ui.js
+.DS_Store
