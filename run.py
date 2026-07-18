@@ -4,7 +4,7 @@ import os
 import time
 
 def run():
-    print("Initializing FutureHire AI Development Environment...")
+    print("Initializing CareerBoost AI Development Environment...")
 
     # Boot flask backend in a separate process
     print("Starting Flask Backend on http://localhost:5000/ ...")
@@ -41,7 +41,7 @@ def run():
                 break
             time.sleep(0.1)
     except KeyboardInterrupt:
-        print("\nTerminating FutureHire AI services...")
+        print("\nTerminating CareerBoost AI services...")
         backend_process.terminate()
         frontend_process.terminate()
 

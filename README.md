@@ -1,6 +1,6 @@
-# FutureHire AI - Placement Preparation & Job Portal Platform
+# CareerBoost AI - Placement Preparation & Job Portal Platform
 
-FutureHire AI is a modern, high-fidelity SaaS-style web platform designed to streamline student placement preparation and job tracking. It features an interactive, glassmorphic React frontend and a robust Flask RESTful API backend.
+CareerBoost AI is a modern, high-fidelity SaaS-style web platform designed to streamline student placement preparation and job tracking. It features an interactive, glassmorphic React frontend and a robust Flask RESTful API backend.
 
 ## Key Modules
 1. **Interactive Dashboard**: Track streak, XP, weekly statistics via Recharts, resume ATS scores, and placement timeline progress.
