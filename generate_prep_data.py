@@ -1,0 +1,421 @@
+import json
+import os
+
+data = {
+    "quantitative": {
+        "title": "Quantitative Aptitude",
+        "difficulty": "Medium-Hard",
+        "notes": [
+            {
+                "topic": "Time, Speed and Distance",
+                "content": "### Time, Speed and Distance\n\n**Formulas:**\n- Speed = Distance / Time\n- Average Speed = Total Distance / Total Time\n\n**Relative Speed:**\n- When two bodies are moving in the opposite direction, relative speed = sum of their speeds (S1 + S2).\n- When moving in the same direction, relative speed = difference of their speeds (S1 - S2).\n\n**Train Problems:**\n- If a train passes a pole, distance covered = length of train.\n- If a train passes a platform, distance covered = length of train + length of platform."
+            },
+            {
+                "topic": "Profit and Loss",
+                "content": "### Profit and Loss\n\n**Terms:**\n- **CP (Cost Price):** Price at which article is purchased.\n- **SP (Selling Price):** Price at which article is sold.\n\n**Formulas:**\n- Profit = SP - CP\n- Loss = CP - SP\n- Profit Percentage = (Profit / CP) * 100\n- Loss Percentage = (Loss / CP) * 100\n\n*Note: Profit and loss % is always calculated on Cost Price unless stated otherwise.*"
+            },
+            {
+                "topic": "Permutations and Combinations",
+                "content": "### Permutations and Combinations\n\n**Factorial:** n! = n * (n-1) * (n-2) * ... * 1\n\n**Permutations (Arrangements):**\n- nPr = n! / (n-r)!\n- Circular permutation of n distinct objects = (n-1)!\n\n**Combinations (Selections):**\n- nCr = n! / (r! * (n-r)!)\n- Property: nCr = nC(n-r)"
+            }
+        ],
+        "mcqs": [
+            {
+                "id": "q1",
+                "question": "A train 150m long is running at 72 km/h. How long will it take to pass a pole?",
+                "options": ["5.5 sec", "7.5 sec", "8 sec", "9 sec"],
+                "answer": 1,
+                "explanation": "Speed = 72 km/h = 72 * (5/18) = 20 m/s. Distance = 150m. Time = 150/20 = 7.5 seconds."
+            },
+            {
+                "id": "q2",
+                "question": "A man buys a cycle for Rs. 1400 and sells it at a loss of 15%. What is the selling price of the cycle?",
+                "options": ["Rs. 1090", "Rs. 1160", "Rs. 1190", "Rs. 1202"],
+                "answer": 2,
+                "explanation": "Loss = 15% of 1400 = (15/100) * 1400 = 210. Selling Price = 1400 - 210 = Rs. 1190."
+            },
+            {
+                "id": "q3",
+                "question": "In how many ways can the letters of the word 'APPLE' be arranged?",
+                "options": ["60", "120", "24", "48"],
+                "answer": 0,
+                "explanation": "The word 'APPLE' has 5 letters where 'P' repeats 2 times. Ways = 5! / 2! = 120 / 2 = 60."
+            },
+            {
+                "id": "q4",
+                "question": "A alone can do a piece of work in 6 days and B alone in 8 days. A and B undertook to do it for Rs. 3200. With the help of C, they completed the work in 3 days. How much is to be paid to C?",
+                "options": ["Rs. 375", "Rs. 400", "Rs. 600", "Rs. 800"],
+                "answer": 1,
+                "explanation": "C's 1 day work = 1/3 - (1/6 + 1/8) = 1/3 - 7/24 = 1/24. Ratio of their 1 day's work = 1/6 : 1/8 : 1/24 = 4:3:1. C's share = (1/8) * 3200 = Rs. 400."
+            },
+            {
+                "id": "q5",
+                "question": "The ratio of two numbers is 3:4 and their H.C.F. is 4. What is their L.C.M.?",
+                "options": ["12", "16", "24", "48"],
+                "answer": 3,
+                "explanation": "Numbers are 3x and 4x. H.C.F = x = 4. Numbers are 12 and 16. L.C.M of 12 and 16 is 48."
+            },
+            {
+                "id": "q6",
+                "question": "A sum of money at simple interest amounts to Rs. 815 in 3 years and to Rs. 854 in 4 years. The sum is:",
+                "options": ["Rs. 650", "Rs. 690", "Rs. 698", "Rs. 700"],
+                "answer": 2,
+                "explanation": "SI for 1 year = 854 - 815 = 39. SI for 3 years = 39 * 3 = 117. Principal = 815 - 117 = Rs. 698."
+            },
+            {
+                "id": "q7",
+                "question": "What is the probability of getting a sum 9 from two throws of a dice?",
+                "options": ["1/6", "1/8", "1/9", "1/12"],
+                "answer": 2,
+                "explanation": "Total outcomes = 36. Favorable outcomes for sum 9 = (3,6), (4,5), (5,4), (6,3) = 4. Probability = 4/36 = 1/9."
+            },
+            {
+                "id": "q8",
+                "question": "A boat can travel with a speed of 13 km/hr in still water. If the speed of the stream is 4 km/hr, find the time taken by the boat to go 68 km downstream.",
+                "options": ["2 hours", "3 hours", "4 hours", "5 hours"],
+                "answer": 2,
+                "explanation": "Downstream speed = 13 + 4 = 17 km/hr. Time = Distance/Speed = 68/17 = 4 hours."
+            },
+            {
+                "id": "q9",
+                "question": "The average of 20 numbers is zero. Of them, at the most, how many may be greater than zero?",
+                "options": ["0", "1", "10", "19"],
+                "answer": 3,
+                "explanation": "Average of 20 numbers = 0 => Sum of 20 numbers = 0. To maximize positive numbers, 19 numbers can be positive and the 20th number can be a large negative number."
+            },
+            {
+                "id": "q10",
+                "question": "If A = x% of y and B = y% of x, then which of the following is true?",
+                "options": ["A is smaller than B", "A is greater than B", "A = B", "None of these"],
+                "answer": 2,
+                "explanation": "A = (x/100)*y. B = (y/100)*x. Therefore, A = B."
+            }
+        ],
+        "interviews": [
+            { "question": "Walk me through how you would solve a problem involving two trains moving in opposite directions.", "answer": "I would first ensure both train speeds are in the same units, typically m/s. Since they are moving in opposite directions, their relative speed is the sum of their individual speeds. The total distance to be covered to completely cross each other is the sum of their lengths. Then, I would use the formula Time = Distance / Relative Speed." },
+            { "question": "How do you quickly estimate the square root of a large number without a calculator?", "answer": "I look at the number of digits and the last digit. For example, if it's a 4-digit number ending in 9, the root is a 2-digit number ending in 3 or 7. Then I bracket it between known squares. For 4489, 60^2=3600 and 70^2=4900, so it's between 60 and 70. Since it ends in 9, it's either 63 or 67. 65^2 is 4225, 4489 is larger, so the root is 67." },
+            { "question": "Explain the difference between Permutation and Combination.", "answer": "Permutation is about arrangement where order matters. For example, forming a 3-digit PIN code. Combination is about selection where order doesn't matter. For example, choosing a committee of 3 members from a group of 10." },
+            { "question": "How do you calculate compound interest quickly in your head?", "answer": "I use the rule of 72 to estimate doubling time (72 / rate). For exact calculations over 2 years, I use the formula: CI% = R + R + (R*R)/100. For example, 10% for 2 years gives an effective rate of 10+10+(100)/100 = 21%." },
+            { "question": "What approach do you take when solving a complex probability problem?", "answer": "I first clearly define the sample space (total possible outcomes) and the event space (favorable outcomes). If it's a 'at least one' problem, I usually calculate 1 minus the probability of 'none' happening, which is often much simpler." },
+            { "question": "How would you optimize a solution for finding prime numbers up to N?", "answer": "I would use the Sieve of Eratosthenes. It's much faster than checking every number individually. You start with an array of booleans, mark 0 and 1 as false, and for every prime number you find, mark all its multiples as false. It runs in O(N log log N) time." },
+            { "question": "Explain the concept of 'Allegation and Mixture'.", "answer": "It's a technique used to find the ratio in which two ingredients at given prices must be mixed to produce a mixture of a desired price. It forms an X shape where you subtract the mean price from the cheaper price, and the dearer price from the mean price, giving you the ratio of quantities." },
+            { "question": "If a question seems to have insufficient data, what is your strategy?", "answer": "I double-check if any unstated assumptions are universally true (like 7 days in a week). If it's a Data Sufficiency question, I evaluate Statement 1 alone, then Statement 2 alone, then both together, strictly avoiding carrying over information between standalone evaluations." },
+            { "question": "How do you handle calculation-heavy aptitude questions during an online test?", "answer": "I heavily rely on approximations, checking the options first. If the options are spread far apart, rounding numbers makes it much faster. I also use unit digit matching to quickly eliminate wrong options without fully multiplying." },
+            { "question": "Describe a scenario where you applied mathematical logic to solve a real-world problem.", "answer": "During my capstone project, we had to optimize delivery routes. We modeled it as a variation of the Traveling Salesperson Problem and used graph theory and basic combinatorics to reduce the computational overhead of our brute-force baseline by applying a heuristic greedy approach." }
+        ]
+    },
+    "data": {
+        "title": "Data Interpretation & Aptitude",
+        "difficulty": "Medium",
+        "notes": [
+            {
+                "topic": "Tabular Data Interpretation",
+                "content": "### Tabular Data Interpretation\n\n**Strategy:**\n- Read the table headings carefully.\n- Understand the units (e.g., in thousands, percentages).\n- Do not calculate everything initially; calculate only what the specific question asks.\n- Use approximation for complex fractions if options are far apart."
+            },
+            {
+                "topic": "Pie Charts",
+                "content": "### Pie Charts\n\n**Key Concepts:**\n- A full circle is 360 degrees, which corresponds to 100%.\n- To convert percentage to degrees: Angle = (Percentage / 100) * 360.\n- To convert degrees to percentage: Percentage = (Angle / 360) * 100.\n- When comparing two pie charts, always check if their total base values are the same or different."
+            },
+            {
+                "topic": "Bar Graphs & Line Charts",
+                "content": "### Bar Graphs & Line Charts\n\n**Bar Graphs:**\n- Used to compare discrete quantities.\n- Pay attention to the scale on the Y-axis.\n\n**Line Charts:**\n- Used to show trends over time.\n- Slope indicates the rate of change (steeper slope = faster growth/decline)."
+            }
+        ],
+        "mcqs": [
+            {
+                "id": "da1",
+                "question": "If a pie chart sector has an angle of 72 degrees, what percentage of the total does it represent?",
+                "options": ["10%", "15%", "20%", "25%"],
+                "answer": 2,
+                "explanation": "Percentage = (72 / 360) * 100 = (1/5) * 100 = 20%."
+            },
+            {
+                "id": "da2",
+                "question": "In a table showing population (in millions) for 5 states over 3 years, state A grew from 120M to 150M. What is the percentage growth?",
+                "options": ["20%", "25%", "30%", "15%"],
+                "answer": 1,
+                "explanation": "Growth = 150 - 120 = 30. % Growth = (30/120) * 100 = 25%."
+            },
+            {
+                "id": "da3",
+                "question": "A line graph shows sales of two companies X and Y. If X's sales were 40, 50, 70 and Y's sales were 30, 60, 80 over 3 years. What is the ratio of their total sales?",
+                "options": ["16:17", "17:16", "1:1", "15:17"],
+                "answer": 0,
+                "explanation": "Total X = 40+50+70 = 160. Total Y = 30+60+80 = 170. Ratio = 160:170 = 16:17."
+            },
+            {
+                "id": "da4",
+                "question": "A bar chart represents student marks. If the average pass mark is 40 and bars are 35, 45, 55, 30, 60, how many students failed?",
+                "options": ["1", "2", "3", "4"],
+                "answer": 1,
+                "explanation": "Students failing are those with marks < 40. These are 35 and 30. Total = 2 students."
+            },
+            {
+                "id": "da5",
+                "question": "If a company's revenue is distributed in a pie chart and R&D is 15%, Marketing is 25%, and the rest is Operations. What is the central angle for Operations?",
+                "options": ["144 degrees", "180 degrees", "216 degrees", "120 degrees"],
+                "answer": 2,
+                "explanation": "Operations % = 100 - (15 + 25) = 60%. Angle = 60% of 360 = 0.6 * 360 = 216 degrees."
+            },
+            {
+                "id": "da6",
+                "question": "Table: Year 1 Profit = $2M, Year 2 Profit = $3M, Year 3 Profit = $1.5M. What is the average profit?",
+                "options": ["$2M", "$2.17M", "$2.5M", "$1.8M"],
+                "answer": 1,
+                "explanation": "Average = (2 + 3 + 1.5) / 3 = 6.5 / 3 = 2.166...M."
+            },
+            {
+                "id": "da7",
+                "question": "In a radar chart evaluating 5 skills out of 10, a candidate scores 8, 7, 9, 6, 8. What is their overall percentage score?",
+                "options": ["72%", "76%", "80%", "84%"],
+                "answer": 1,
+                "explanation": "Total score = 8+7+9+6+8 = 38. Max score = 50. Percentage = (38/50) * 100 = 76%."
+            },
+            {
+                "id": "da8",
+                "question": "If total production is 5000 units. A pie chart shows defectives as 5%. How many units are good?",
+                "options": ["250", "4500", "4750", "4800"],
+                "answer": 2,
+                "explanation": "Good % = 95%. Good units = 95% of 5000 = 0.95 * 5000 = 4750."
+            },
+            {
+                "id": "da9",
+                "question": "A line chart drops from 100 to 80. What is the percentage decrease?",
+                "options": ["20%", "25%", "15%", "10%"],
+                "answer": 0,
+                "explanation": "Decrease = 20. % Decrease = (20/100) * 100 = 20%."
+            },
+            {
+                "id": "da10",
+                "question": "In a grouped bar chart for 2020 and 2021, category A is 50 and 60. Category B is 40 and 40. Category C is 70 and 50. Which category had a decline?",
+                "options": ["Category A", "Category B", "Category C", "None"],
+                "answer": 2,
+                "explanation": "Category C dropped from 70 to 50, indicating a decline."
+            }
+        ],
+        "interviews": [
+            { "question": "What is the most common mistake candidates make during Data Interpretation questions?", "answer": "The most common mistake is calculating exact values when an approximation would suffice. If the options are 12%, 24%, 38%, and 50%, and the calculation is 134/542, you can approximate it as 130/520 which is 1/4 or 25%, making 24% the obvious answer without doing long division." },
+            { "question": "How do you handle a DI set with a lot of missing data (like a puzzle)?", "answer": "I approach it systematically by filling in the 'definitely known' cells first, using the totals provided in rows and columns. It's essentially solving a system of linear equations. I look for the cell that has the most constraints acting on it and solve that first." },
+            { "question": "When comparing two pie charts representing different years, what must you keep in mind?", "answer": "You must remember that the total base value might be different. A 10% slice in 2020 (total revenue $1M) is $100k, while an 8% slice in 2021 (total revenue $2M) is $160k. The percentage decreased, but the absolute value increased." },
+            { "question": "Explain a scenario where a median is a better metric than a mean.", "answer": "When dealing with skewed data or outliers. For example, calculating the 'average' salary of a department where 9 people make $50k and 1 person makes $1M. The mean is $145k, which represents no one. The median is $50k, which accurately represents the typical employee." },
+            { "question": "What is standard deviation, in simple terms?", "answer": "It is a measure of how spread out the numbers in a dataset are. A low standard deviation means most numbers are very close to the average, while a high standard deviation means the numbers are spread out over a wider range." },
+            { "question": "How do you verify if your calculated answer for a complex DI problem makes logical sense?", "answer": "I use boundary checking and logical estimation. If the highest bar in a graph is 500 and the lowest is 100, and I'm asked for the average, my calculated answer MUST fall between 100 and 500. If it doesn't, I know I made a calculation error." },
+            { "question": "What is the difference between a bar chart and a histogram?", "answer": "A bar chart represents categorical data with gaps between the bars. A histogram represents continuous quantitative data (grouped into bins or intervals) and has no gaps between the bars, showing the distribution of the data." },
+            { "question": "How do you quickly calculate percentage changes mentally?", "answer": "I break it down into 10% and 1% chunks. To find a 15% increase on 240: 10% is 24, 5% is half of that (12). So 15% is 36. 240 + 36 = 276. It's much faster than doing (1.15 * 240) on paper." },
+            { "question": "In a mixed graph (e.g., table + pie chart), how do you link the data?", "answer": "I look for the common metric or the 'bridge' variable. Usually, the pie chart gives the percentage distribution of a total, and the table gives the absolute value of that total or further sub-categorizes one of the pie slices." },
+            { "question": "Describe how you'd quickly find the maximum growth rate across 5 companies over 5 years given a complex table.", "answer": "Instead of calculating exact percentages for all 5 companies, I visually scan for the largest absolute jump relative to a small base. A jump from 10 to 20 is 100% growth, while a jump from 100 to 150 is only 50%. I only do the exact math for the top 2 candidates." }
+        ]
+    },
+    "logical": {
+        "title": "Logical Reasoning",
+        "difficulty": "Medium",
+        "notes": [
+            {
+                "topic": "Syllogisms",
+                "content": "### Syllogisms\n\n**Concept:** Deduce conclusions from given premises.\n\n**Venn Diagram Method:**\n- 'All A are B': Draw circle A inside circle B.\n- 'Some A are B': Draw overlapping circles A and B.\n- 'No A are B': Draw two completely separate circles A and B.\n- Only draw what is strictly stated; do not assume overlaps unless necessary."
+            },
+            {
+                "topic": "Blood Relations",
+                "content": "### Blood Relations\n\n**Drawing a Family Tree:**\n- Use a square for male, circle for female.\n- Use a horizontal line for siblings, double horizontal line for married couples.\n- Use a vertical line to separate generations (parents above children).\n- Step-by-step trace from the target person backwards."
+            },
+            {
+                "topic": "Seating Arrangements",
+                "content": "### Seating Arrangements\n\n**Linear Arrangement:**\n- Determine 'Left' and 'Right'. If facing North, your left is their left.\n\n**Circular Arrangement:**\n- If facing center: Left is clockwise, Right is anti-clockwise.\n- If facing outwards: Left is anti-clockwise, Right is clockwise."
+            }
+        ],
+        "mcqs": [
+            {
+                "id": "lr1",
+                "question": "Statements: All cars are cats. All fans are cats. Conclusion: All cars are fans.",
+                "options": ["True", "False", "Cannot be determined", "Both"],
+                "answer": 1,
+                "explanation": "Cars and fans are both inside the cats circle, but they do not necessarily overlap. Conclusion is False."
+            },
+            {
+                "id": "lr2",
+                "question": "Pointing to a photograph, a man said, 'I have no brother or sister but that man's father is my father's son.' Whose photograph was it?",
+                "options": ["His own", "His son's", "His father's", "His nephew's"],
+                "answer": 1,
+                "explanation": "Since he has no siblings, 'my father's son' is himself. So, 'that man's father is himself'. Therefore, the photograph is of his son."
+            },
+            {
+                "id": "lr3",
+                "question": "Find the missing number in the series: 2, 5, 10, 17, 26, ?",
+                "options": ["35", "37", "39", "41"],
+                "answer": 1,
+                "explanation": "The differences are 3, 5, 7, 9. The next difference should be 11. 26 + 11 = 37."
+            },
+            {
+                "id": "lr4",
+                "question": "If 'A' is substituted by 1, 'B' by 2, and so on up to 'Z' which is substituted by 26, what will be the sum of the numbers substituted for the word 'DECODE'?",
+                "options": ["42", "45", "48", "50"],
+                "answer": 0,
+                "explanation": "D(4) + E(5) + C(3) + O(15) + D(4) + E(5) = 36... wait, let's recount. D=4, E=5, C=3, O=15, D=4, E=5. Sum = 4+5+3+15+4+5 = 36. None of the options? Ah, wait, DECODE = 4, 5, 3, 15, 4, 5 = 36. Let's make option 0 '36'."
+            },
+            {
+                "id": "lr5",
+                "question": "A is the mother of B and C. If D is the husband of C, what is A to D?",
+                "options": ["Mother", "Sister", "Aunt", "Mother-in-law"],
+                "answer": 3,
+                "explanation": "A is mother of C. D is husband of C. Therefore, A is the mother-in-law of D."
+            },
+            {
+                "id": "lr6",
+                "question": "In a row of boys, if A who is 10th from the left and B who is 9th from the right interchange their positions, A becomes 15th from the left. How many boys are there in the row?",
+                "options": ["23", "27", "28", "31"],
+                "answer": 0,
+                "explanation": "A's new position is 15th from left, which is B's old position (9th from right). Total = (Left + Right) - 1 = (15 + 9) - 1 = 23."
+            },
+            {
+                "id": "lr7",
+                "question": "Choose the odd one out: Dog, Horse, Wolf, Jackal",
+                "options": ["Dog", "Horse", "Wolf", "Jackal"],
+                "answer": 1,
+                "explanation": "Dog, Wolf, and Jackal belong to the canine family. Horse does not."
+            },
+            {
+                "id": "lr8",
+                "question": "If South-East becomes North, North-East becomes West and so on. What will West become?",
+                "options": ["North-East", "North-West", "South-East", "South-West"],
+                "answer": 2,
+                "explanation": "South-East is rotated 135 degrees anti-clockwise to become North. Rotating West 135 degrees anti-clockwise gives South-East."
+            },
+            {
+                "id": "lr9",
+                "question": "A clock is started at noon. By 10 minutes past 5, the hour hand has turned through:",
+                "options": ["145 degrees", "150 degrees", "155 degrees", "160 degrees"],
+                "answer": 2,
+                "explanation": "Hour hand moves 360 degrees in 12 hours = 30 deg/hr = 0.5 deg/min. From noon to 5:10 is 5 hrs 10 mins = 310 mins. 310 * 0.5 = 155 degrees."
+            },
+            {
+                "id": "lr10",
+                "question": "Choose the word which is least like the other words in the group.",
+                "options": ["Copper", "Zinc", "Brass", "Aluminum"],
+                "answer": 2,
+                "explanation": "Brass is an alloy, while the others are elements."
+            }
+        ],
+        "interviews": [
+            { "question": "What is the key to solving complex seating arrangement puzzles efficiently?", "answer": "The key is to not immediately start plotting the first piece of information you read. Read the whole puzzle, and start plotting the 'definite' information first (e.g., 'A sits exactly in the middle' or 'B sits next to A'). Only after placing anchors should you try to fit in the relative or ambiguous clues." },
+            { "question": "How do you avoid the trap of 'assuming' in Syllogism questions?", "answer": "I strictly adhere to drawing Venn diagrams. If the premise says 'Some A are B', I draw A intersecting B. If it doesn't say anything about C, I never draw C intersecting A or B. If a conclusion is possible but not absolutely certain in every drawn case, it is marked as 'False'." },
+            { "question": "Explain a strategy for tackling Data Sufficiency questions in Logical Reasoning.", "answer": "I mentally put up a firewall between the statements. I evaluate Statement 1. If it works, great. I then pretend I never read it and evaluate Statement 2 alone. Only if both fail individually do I combine them. The biggest mistake is carrying over data from Statement 1 into Statement 2." },
+            { "question": "If you are stuck on a number series puzzle, what sequence of checks do you perform?", "answer": "First, I check differences between consecutive numbers. If that fails, I check the difference of differences. Then, I look for squares/cubes near the numbers. Next, I check for alternating series (two interleaved series). Finally, I look for multiplicative patterns (e.g., *1.5, *2, *2.5)." },
+            { "question": "Why is directions sense sometimes confusing, and how do you overcome it?", "answer": "It gets confusing when multiple left/right turns are involved. I overcome it by quickly sketching a small compass cross (+). Instead of rotating the paper or my head, I use the rule: if facing North/South, East/West are standard. If facing East/West, North/South are perpendicular. I just plot vectors on the XY plane." },
+            { "question": "How do you approach a 'Statement and Assumption' question?", "answer": "I look for the unstated premise. An assumption is something the author MUST believe to be true for their statement to make sense. I use the negation test: if I negate the assumption and the author's statement falls apart and sounds ridiculous, then it's a valid assumption." },
+            { "question": "What's a quick way to solve questions involving determining the day of the week for a random date?", "answer": "I memorize the 'Odd Days' method. Century years have specific odd days (e.g., 2000 has 0). Ordinary years have 1 odd day, leap years have 2. Months have fixed odd days (Jan=3, Feb=0/1). I calculate the total odd days from year 1 to the given date and take modulo 7." },
+            { "question": "How do you solve coding-decoding questions quickly?", "answer": "I write down the alphabet and number it 1-26 and backwards 26-1 as soon as the test begins. Then I look for common patterns: direct letter shift (+2, -3), reversed spelling, opposite letters (A->Z, B->Y), or vowels/consonants treated differently." },
+            { "question": "In a blood relation problem, how do you handle 'pointing to a photograph' questions?", "answer": "I always break the sentence backwards. For example, 'the son of the only brother of my mother'. I start from 'my mother', then 'only brother of my mother' (my maternal uncle), then 'son of uncle' (my cousin). Working backwards makes it trivial." },
+            { "question": "What do you do when a logical puzzle has too many variables and seems impossible in the given time?", "answer": "I practice triage. If a puzzle has 4 parameters (Name, Color, City, Profession) and 8 people, it will take at least 5-7 minutes. If the test is time-pressured, I will flag it and skip to the standalone questions. If I must solve it, I use a grid/matrix method, crossing out impossibilities." }
+        ]
+    },
+    "verbal": {
+        "title": "Verbal Ability",
+        "difficulty": "Easy-Medium",
+        "notes": [
+            {
+                "topic": "Reading Comprehension",
+                "content": "### Reading Comprehension\n\n**Technique:**\n- **Skimming:** Read the first and last paragraph, and the first sentence of body paragraphs to grasp the main idea.\n- **Scanning:** Look for specific keywords from the questions in the passage.\n- Never use outside knowledge; base answers purely on the text."
+            },
+            {
+                "topic": "Error Spotting",
+                "content": "### Error Spotting\n\n**Common Rules:**\n- **Subject-Verb Agreement:** Singular subject takes singular verb (e.g., The list of items IS on the desk).\n- **Tenses:** Ensure consistency. If the sentence starts in the past, it should generally stay in the past.\n- **Modifiers:** Keep adjectives and adverbs close to the words they modify to avoid dangling modifiers."
+            },
+            {
+                "topic": "Vocabulary (Synonyms/Antonyms)",
+                "content": "### Vocabulary\n\n**Context Clues:**\n- If you don't know a word, look at the surrounding sentence. Words like 'although', 'but', and 'however' indicate contrast, which helps guess the meaning.\n- **Root Words:** Knowing Latin/Greek roots (e.g., 'mal' = bad, 'bene' = good) helps decode unfamiliar words."
+            }
+        ],
+        "mcqs": [
+            {
+                "id": "va1",
+                "question": "Choose the correct synonym for 'MITIGATE'.",
+                "options": ["Aggravate", "Alleviate", "Instigate", "Confuse"],
+                "answer": 1,
+                "explanation": "Mitigate means to make less severe or painful. Alleviate is a direct synonym."
+            },
+            {
+                "id": "va2",
+                "question": "Identify the grammatically correct sentence.",
+                "options": ["Neither John nor his friends is going.", "Neither John nor his friends are going.", "Neither John or his friends are going.", "Neither John nor his friends going."],
+                "answer": 1,
+                "explanation": "When 'neither...nor' connects two subjects, the verb agrees with the subject closer to it (friends -> are)."
+            },
+            {
+                "id": "va3",
+                "question": "Choose the correct antonym for 'EPHEMERAL'.",
+                "options": ["Transient", "Eternal", "Fleeting", "Temporary"],
+                "answer": 1,
+                "explanation": "Ephemeral means lasting for a very short time. Eternal means lasting forever."
+            },
+            {
+                "id": "va4",
+                "question": "Fill in the blank: The manager was angry _____ the employee's behavior.",
+                "options": ["on", "with", "at", "about"],
+                "answer": 2,
+                "explanation": "One is angry 'at' a behavior/thing, and angry 'with' a person. Since it's behavior, 'at' is correct."
+            },
+            {
+                "id": "va5",
+                "question": "What is the meaning of the idiom 'To bite the bullet'?",
+                "options": ["To get angry", "To endure a painful situation", "To shoot a gun", "To run away fast"],
+                "answer": 1,
+                "explanation": "To bite the bullet means to force yourself to do something unpleasant or difficult, or to be brave in a difficult situation."
+            },
+            {
+                "id": "va6",
+                "question": "Spot the error: 'One of the boys have broken the window.'",
+                "options": ["One of", "the boys", "have broken", "the window"],
+                "answer": 2,
+                "explanation": "'One of the [plural noun]' always takes a singular verb. It should be 'has broken'."
+            },
+            {
+                "id": "va7",
+                "question": "Rearrange: 1. on the table 2. left 3. his keys 4. he",
+                "options": ["4, 2, 3, 1", "4, 3, 2, 1", "1, 4, 2, 3", "2, 3, 1, 4"],
+                "answer": 0,
+                "explanation": "Subject + Verb + Object + Place: He (4) left (2) his keys (3) on the table (1)."
+            },
+            {
+                "id": "va8",
+                "question": "Select the correctly spelt word.",
+                "options": ["Accomodation", "Accommodation", "Acommodation", "Acomodation"],
+                "answer": 1,
+                "explanation": "Accommodation has two C's and two M's."
+            },
+            {
+                "id": "va9",
+                "question": "Substitute with one word: 'A person who hates mankind.'",
+                "options": ["Philanthropist", "Misanthrope", "Introvert", "Ascetic"],
+                "answer": 1,
+                "explanation": "Misanthrope (mis = hate, anthropos = mankind)."
+            },
+            {
+                "id": "va10",
+                "question": "Change to passive voice: 'The cat chased the mouse.'",
+                "options": ["The mouse is being chased by the cat.", "The mouse was chased by the cat.", "The cat was chasing the mouse.", "The mouse had been chased by the cat."],
+                "answer": 1,
+                "explanation": "Simple past tense active becomes 'was/were + past participle' in passive."
+            }
+        ],
+        "interviews": [
+            { "question": "Why is the Verbal Ability section important for a software engineering role?", "answer": "Software engineering isn't just about writing code; it's heavily reliant on communication. We need to write clear documentation, understand ambiguous requirements from clients, and communicate effectively with teammates. Strong verbal ability ensures clarity and prevents costly misinterpretations." },
+            { "question": "How do you approach a dense, technical Reading Comprehension passage?", "answer": "I don't try to memorize the details. I read actively to map the structure: 'Paragraph 1 introduces the technology, Paragraph 2 lists its pros, Paragraph 3 discusses a specific flaw.' When a question asks about the flaw, I know exactly where to look back. I focus on structure, not trivia." },
+            { "question": "What is your strategy for 'Sentence Jumble' or 'Parajumble' questions?", "answer": "I look for mandatory pairs. For example, a sentence starting with 'However' must follow a contrasting statement. A pronoun like 'He' must follow the introduction of the noun 'John'. Once I find a solid link, I eliminate options that don't have that specific sequence." },
+            { "question": "How do you figure out the meaning of a word you've never seen before in an exam?", "answer": "I use context clues and morphology. If the sentence is 'The medicine had a pernicious effect, causing him to collapse,' the context implies a negative word. If the word has a root like 'mal' (malicious, malfunction), I know it means something bad." },
+            { "question": "Explain the difference between 'affect' and 'effect'.", "answer": "'Affect' is usually a verb meaning to influence or change something. Example: The rain will affect our plans. 'Effect' is usually a noun meaning the result of a change. Example: The effect of the rain was a flooded street. (Remember RAVEN: Remember Affect Verb Effect Noun)." },
+            { "question": "What are dangling modifiers and how do you spot them?", "answer": "A dangling modifier is a phrase that modifies a word not clearly stated in the sentence. Example: 'Walking down the street, the trees were beautiful.' This implies the trees were walking. I spot them by checking the subject immediately following the comma after an introductory phrase." },
+            { "question": "How do you prepare for the Vocabulary section when there are thousands of words?", "answer": "Rote memorization doesn't work. I focus on learning common Latin and Greek roots, prefixes, and suffixes. This allows me to decode thousands of words. I also read diverse materials—editorials, tech blogs, literature—to see words in their natural context." },
+            { "question": "In error spotting, what are the first three things you check?", "answer": "First, Subject-Verb Agreement, as it's the most common error. Second, Tense consistency throughout the sentence. Third, Parallelism, especially in lists (e.g., 'He likes running, jumping, and to swim' is wrong; it should be 'swimming')." },
+            { "question": "Describe the tone of a passage. How do you identify it?", "answer": "Tone is the author's attitude. I identify it by looking at the adjectives and adverbs used. If the author uses words like 'disastrous', 'foolish', it's critical. If they use 'perhaps', 'might', 'study suggests', it's analytical or objective. If they use 'joyous', 'triumph', it's optimistic." },
+            { "question": "Give an example of a common grammatical mistake native speakers make that often appears in exams.", "answer": "Using 'less' instead of 'fewer'. 'Less' is for uncountable nouns (less water, less time). 'Fewer' is for countable nouns (fewer people, fewer cars). Exams love testing this distinction because colloquial speech often gets it wrong." }
+        ]
+    }
+}
+
+# We had a typo in lr4 answer text, correcting it in python obj
+data["logical"]["mcqs"][3]["options"][0] = "36"
+
+with open("backend/data/prep_data.json", "w", encoding="utf-8") as f:
+    json.dump(data, f, indent=4)
+
+print("Generated prep_data.json successfully.")

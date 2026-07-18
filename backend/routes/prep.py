@@ -2,6 +2,8 @@ from flask import Blueprint, request, jsonify
 from backend.database.models import db, User
 from flask_jwt_extended import jwt_required, get_jwt_identity
 import sys
+import json
+import os
 
 prep_bp = Blueprint('prep', __name__)
 
@@ -139,19 +141,29 @@ PREP_DATA = {
 @prep_bp.route('/<string:topic>', methods=['GET'])
 def get_prep_topic(topic):
     normalized = topic.lower().strip()
-    data = PREP_DATA.get(normalized)
+    
+    # Load from JSON file
+    file_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'prep_data.json')
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            prep_data = json.load(f)
+    except Exception as e:
+        return jsonify({"error": "Failed to load prep data"}), 500
+
+    data = prep_data.get(normalized)
+    
     if not data:
         # Fallback dynamic object for other requested topics (OOP, Java, Python, JavaScript, ML, PowerBI)
         data = {
             "title": topic.upper(),
             "difficulty": "Medium",
-            "notes": [f"Learn fundamentals of {topic}.", f"Explore advanced interview patterns and core features."],
+            "notes": [{"topic": f"Fundamentals of {topic}", "content": f"Explore advanced interview patterns and core features of {topic}."}],
             "videos": [],
             "mcqs": [
-                {"id": f"{topic}-q1", "question": f"What is core concept in {topic}?", "options": ["Option A", "Option B", "Option C", "Option D"], "answer": 0}
+                {"id": f"{topic}-q1", "question": f"What is core concept in {topic}?", "options": ["Option A", "Option B", "Option C", "Option D"], "answer": 0, "explanation": "It is Option A."}
             ],
             "coding": [],
-            "interviews": [f"Common tech queries relating to {topic}."]
+            "interviews": [{"question": f"Common tech queries relating to {topic}?", "answer": "Answer goes here."}]
         }
     return jsonify(data), 200
 

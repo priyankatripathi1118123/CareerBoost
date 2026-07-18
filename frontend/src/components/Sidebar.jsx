@@ -11,9 +11,7 @@ export default function Sidebar({ activePage, setActivePage, user, logout }) {
     { id: 'career', label: 'AI Career Coach', icon: '🤖' },
     { id: 'companies', label: 'Companies', icon: '🏢' },
     { id: 'dsasheet', label: 'DSA Sheet', icon: '📝' },
-    { id: 'interviewquestions', label: 'Interview Questions', icon: '💬' },
-    { id: 'aptitude', label: 'Aptitude', icon: '🧠' },
-    { id: 'codingproblems', label: 'Coding Problems', icon: '⌨️' }
+    { id: 'interviewquestions', label: 'Interview Questions', icon: '💬' }
   ];
 
   return (

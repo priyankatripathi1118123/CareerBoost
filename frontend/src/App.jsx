@@ -1,20 +1,18 @@
-import React, { useState, useContext } from 'react';
-import { AuthProvider, AuthContext } from './context/AuthContext';
-import Sidebar from './components/Sidebar';
+import { useContext, useState } from 'react';
 import Navbar from './components/Navbar';
-import Dashboard from './pages/Dashboard';
-import JobPortal from './pages/JobPortal';
-import PrepHub from './pages/PrepHub';
-import Playground from './pages/Playground';
-import AIInterview from './pages/AIInterview';
-import ResumeBuilder from './pages/ResumeBuilder';
+import Sidebar from './components/Sidebar';
+import { AuthContext, AuthProvider } from './context/AuthContext';
 import AICareer from './pages/AICareer';
+import AIInterview from './pages/AIInterview';
 import Companies from './pages/Companies';
+import Dashboard from './pages/Dashboard';
 import DSASheet from './pages/DSASheet';
 import InterviewQuestions from './pages/InterviewQuestions';
-import Aptitude from './pages/Aptitude';
-import CodingProblems from './pages/CodingProblems';
+import JobPortal from './pages/JobPortal';
 import Login from './pages/Login';
+import Playground from './pages/Playground';
+import PrepHub from './pages/PrepHub';
+import ResumeBuilder from './pages/ResumeBuilder';
 import Signup from './pages/Signup';
 
 function AppContent() {
@@ -95,10 +93,6 @@ function AppContent() {
         return <DSASheet />;
       case 'interviewquestions':
         return <InterviewQuestions />;
-      case 'aptitude':
-        return <Aptitude />;
-      case 'codingproblems':
-        return <CodingProblems />;
       default:
         return <Dashboard user={user} setActivePage={setActivePage} />;
     }
