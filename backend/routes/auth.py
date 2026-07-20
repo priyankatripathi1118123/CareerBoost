@@ -4,6 +4,9 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 import os
 
 auth_bp = Blueprint('auth', __name__)
+@auth_bp.route('/')
+def home():
+    return "Welcome to CareerBoost! App is running successfully."
 
 @auth_bp.route('/signup', methods=['POST'])
 def signup():
