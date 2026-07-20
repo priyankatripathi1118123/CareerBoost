@@ -15,6 +15,9 @@ def create_app():
     # Setup JWT Manager
     jwt = JWTManager(app)
 
+    @app.route('/')
+    def home():
+        return "Welcome to CareerBoost! App is running successfully."
     # Initialize Database
     db.init_app(app)
 
